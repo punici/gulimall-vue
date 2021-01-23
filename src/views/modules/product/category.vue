@@ -106,7 +106,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl("/product/category/list/tree"),
         method: "get"
-      }).then(({data}) => {
+      }).then(({ data }) => {
         console.log("成功获取到菜单数据...", data.data);
         this.menus = data.data;
       });
@@ -128,7 +128,7 @@ export default {
             url: this.$http.adornUrl("/product/category/delete"),
             method: "post",
             data: this.$http.adornData(catIds, false)
-          }).then(({data}) => {
+          }).then(({ data }) => {
             this.$message({
               message: "菜单批量删除成功",
               type: "success"
@@ -136,15 +136,14 @@ export default {
             this.getMenus();
           });
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     },
     batchSave() {
       this.$http({
         url: this.$http.adornUrl("/product/category/update/sort"),
         method: "post",
         data: this.$http.adornData(this.updateNodes, false)
-      }).then(({data}) => {
+      }).then(({ data }) => {
         this.$message({
           message: "菜单顺序等修改成功",
           type: "success"
@@ -163,9 +162,9 @@ export default {
       //1、当前节点最新的父节点id
       let pCid = 0;
       let siblings = null;
-      if (dropType === "before" || dropType === "after") {
+      if (dropType == "before" || dropType == "after") {
         pCid =
-          dropNode.parent.data.catId === undefined
+          dropNode.parent.data.catId == undefined
             ? 0
             : dropNode.parent.data.catId;
         siblings = dropNode.parent.childNodes;
@@ -177,10 +176,10 @@ export default {
 
       //2、当前拖拽节点的最新顺序，
       for (let i = 0; i < siblings.length; i++) {
-        if (siblings[i].data.catId === draggingNode.data.catId) {
+        if (siblings[i].data.catId == draggingNode.data.catId) {
           //如果遍历的是当前正在拖拽的节点
           let catLevel = draggingNode.level;
-          if (siblings[i].level !== draggingNode.level) {
+          if (siblings[i].level != draggingNode.level) {
             //当前节点的层级发生变化
             catLevel = siblings[i].level;
             //修改他子节点的层级
@@ -193,7 +192,7 @@ export default {
             catLevel: catLevel
           });
         } else {
-          this.updateNodes.push({catId: siblings[i].data.catId, sort: i});
+          this.updateNodes.push({ catId: siblings[i].data.catId, sort: i });
         }
       }
 
@@ -224,7 +223,7 @@ export default {
       console.log("深度：", deep);
 
       //   this.maxLevel
-      if (type === "inner") {
+      if (type == "inner") {
         // console.log(
         //   `this.maxLevel：${this.maxLevel}；draggingNode.data.catLevel：${draggingNode.data.catLevel}；dropNode.level：${dropNode.level}`
         // );
@@ -254,7 +253,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl(`/product/category/info/${data.catId}`),
         method: "get"
-      }).then(({data}) => {
+      }).then(({ data }) => {
         //请求成功
         console.log("要回显的数据", data);
         this.category.name = data.data.name;
@@ -267,9 +266,9 @@ export default {
         this.category.showStatus = data.data.showStatus;
         /**
          *         parentCid: 0,
-         catLevel: 0,
-         showStatus: 1,
-         sort: 0,
+        catLevel: 0,
+        showStatus: 1,
+        sort: 0,
          */
       });
     },
@@ -289,21 +288,21 @@ export default {
     },
 
     submitData() {
-      if (this.dialogType === "add") {
+      if (this.dialogType == "add") {
         this.addCategory();
       }
-      if (this.dialogType === "edit") {
+      if (this.dialogType == "edit") {
         this.editCategory();
       }
     },
     //修改三级分类数据
     editCategory() {
-      var {catId, name, icon, productUnit} = this.category;
+      var { catId, name, icon, productUnit } = this.category;
       this.$http({
         url: this.$http.adornUrl("/product/category/update"),
         method: "post",
-        data: this.$http.adornData({catId, name, icon, productUnit}, false)
-      }).then(({data}) => {
+        data: this.$http.adornData({ catId, name, icon, productUnit }, false)
+      }).then(({ data }) => {
         this.$message({
           message: "菜单修改成功",
           type: "success"
@@ -323,7 +322,7 @@ export default {
         url: this.$http.adornUrl("/product/category/save"),
         method: "post",
         data: this.$http.adornData(this.category, false)
-      }).then(({data}) => {
+      }).then(({ data }) => {
         this.$message({
           message: "菜单保存成功",
           type: "success"
@@ -349,7 +348,7 @@ export default {
             url: this.$http.adornUrl("/product/category/delete"),
             method: "post",
             data: this.$http.adornData(ids, false)
-          }).then(({data}) => {
+          }).then(({ data }) => {
             this.$message({
               message: "菜单删除成功",
               type: "success"
@@ -360,8 +359,7 @@ export default {
             this.expandedKey = [node.parent.data.catId];
           });
         })
-        .catch(() => {
-        });
+        .catch(() => {});
 
       console.log("remove", node, data);
     }
@@ -371,21 +369,15 @@ export default {
     this.getMenus();
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {
-  },
-  beforeCreate() {
-  }, //生命周期 - 创建之前
-  beforeMount() {
-  }, //生命周期 - 挂载之前
-  beforeUpdate() {
-  }, //生命周期 - 更新之前
-  updated() {
-  }, //生命周期 - 更新之后
-  beforeDestroy() {
-  }, //生命周期 - 销毁之前
-  destroyed() {
-  }, //生命周期 - 销毁完成
-  activated() {
-  } //如果页面有keep-alive缓存功能，这个函数会触发
+  mounted() {},
+  beforeCreate() {}, //生命周期 - 创建之前
+  beforeMount() {}, //生命周期 - 挂载之前
+  beforeUpdate() {}, //生命周期 - 更新之前
+  updated() {}, //生命周期 - 更新之后
+  beforeDestroy() {}, //生命周期 - 销毁之前
+  destroyed() {}, //生命周期 - 销毁完成
+  activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
+<style scoped>
+</style>
